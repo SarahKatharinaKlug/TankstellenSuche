@@ -1,0 +1,101 @@
+//Sarah Katharina Klug
+fetch('https://geoportal.stadt-koeln.de/arcgis/rest/services/verkehr/gefahrgutstrecken/MapServer/0/query?where=objectid+is+not+null&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=pjson')
+    .then((response) => response.json())
+    .then((json) => {
+        // Funktiomsaufruf um Tabelle zu erzeugen
+        createTableFromJson(json);
+
+        // Eventlistener für Auf- und Absteige Buttons
+        document.getElementById('sort-asc').addEventListener('click', () => {
+            sortTable('asc');
+        });
+
+        document.getElementById('sort-desc').addEventListener('click', () => {
+            sortTable('desc');
+        });
+    });
+
+// Tabelle erstellen mit JSON Daten Funktionen 
+function createTableFromJson(json) {
+    let table = document.createElement('table');
+
+    let headers = json.fields.map(field => field.name);
+    let headerRow = table.insertRow();
+    headers.forEach(headerText => {
+        let header = document.createElement('th');
+        let textNode = document.createTextNode(headerText.charAt(0).toUpperCase() + headerText.slice(1)); //Ersten Buchstaben Großschreiben
+        header.appendChild(textNode);
+        headerRow.appendChild(header);
+    });
+
+    json.features.forEach((feature, index) => {
+        let row = table.insertRow();
+        headers.forEach(header => {
+            let cell = row.insertCell();
+            cell.appendChild(document.createTextNode(feature.attributes[header]));
+        });
+
+        // Adressen anklickbar machen
+        let addressCell = row.cells[headers.indexOf('adresse')]; 
+        addressCell.style.cursor = 'pointer'; 
+        addressCell.addEventListener('click', () => {
+            openGoogleMaps(feature.attributes['adresse']); 
+        });
+    });
+
+    let container = document.getElementById('table-container');
+    container.innerHTML = '';
+    container.appendChild(table);
+}
+
+// On click die adresse in Maps öffnen 
+function openGoogleMaps(adresse) {
+    // Googlemaps url um adresse ergänzen
+    let url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(adresse)}`;
+    window.open(url, '_blank');
+}
+
+//Tabelle Sortieren 
+function sortTable(order) {
+    let table, rows, switching, i, x, y, shouldSwitch;
+    table = document.querySelector('table'); 
+    switching = true;
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName('td')[1].innerText.toLowerCase();
+            y = rows[i + 1].getElementsByTagName('td')[1].innerText.toLowerCase();
+            if (order === 'asc' ? x > y : x < y) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+        }
+    }
+}
+
+
+//Adressen Durchsuchen
+function searchAddress() {
+    let input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.querySelector('table');
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1]; 
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+<!-- Sarah Katharina Klug -->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width-device-width, initial-scale=1">
+		<title>Tankstellen Köln</title>
+		<link rel="stylesheet" href="style.css"> <!-- CSS Stylesheet import-->
+		<script src="script.js"> </script> <!-- JavaScript Script import -->
+		<script src="https://kit.fontawesome.com/d06b562533.js" crossorigin="anonymous"></script> <!-- Icon Import  -->
+	</head>
+
+	<body>
+		<ul class="header">
+		  <li id="name">Tankstellen Suche - Köln &nbsp; <i class="fa-solid fa-gas-pump fa-2lg fa-fade" style="--fa-animation-duration: 5s; --fa-fade-opacity: 0.2;"></i> </li>
+		  <li id="sort-asc">Aufsteigend Sortieren</li>
+		  <li id="sort-desc">Absteigend Sortieren</li>
+		  <li class="search">
+			<input type="text" id="searchInput" placeholder="Adresse suchen...">
+            <button id="searchButton" onclick="searchAddress()"> Suchen </button></li>
+		</ul>
+		<div id="table-container"> </div>
+	 </body>
+
+</html> 

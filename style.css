@@ -1,0 +1,99 @@
+/*Sarah Katharina Klug */
+
+body{
+	background-color:#19191a;
+	color:#19191a;
+	margin: auto;
+	font-family: Lucida Bright, Georgia, serif;
+}
+
+/* Überschrift bzw. Titel */
+#name{
+	font-size:25px;
+	background-color: #111;
+	color: #F0FFFF;
+}
+
+/* Auf- und Absteige Buttons  */
+#sort-asc, #sort-desc{
+	color: white;
+	border: none;
+    background-color: #333;
+	padding: 20px;
+}
+
+#sort-asc:hover {background-color: #111;}
+#sort-desc:hover {background-color: #111;}
+
+
+/* input textfeld für suche */
+input[type=text] {
+  box-sizing: border-box;
+  border: 3px solid #F0FFFF;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  padding: 4px;
+}
+/* Such Button */ 
+#searchButton{
+	background-color: #111;
+	color: #F0FFFF;
+	padding: 4px;
+	border-radius: 8px;
+	border: 2px solid #F0FFFF;
+	
+}
+
+/* header */ 
+ul.header {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul.header li {float: left;}
+
+ul.header li  {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 15px 17px;
+  text-decoration: none;
+}
+
+ul.header li.active {background-color: #04AA6D;}
+ul.header li.search {float: right;}
+
+
+@media screen and (max-width: 600px) {
+  ul.header li.search, 
+  ul.header li {float: none;}
+}
+
+/*Tabelle und Container für ID und Adresse*/
+#table-container{
+  text-align: center;
+  padding: 10px;
+  margin: 5px;
+  
+  }
+  
+table, th, td {
+  border: 5px solid #19191a;
+  border-collapse: collapse;
+  font-size: 20px;
+}
+th, td {
+  background-color: #F0FFFF;
+  padding: 25px;
+  margin: 5px;
+
+}
+
+td:hover{
+	font-weight: bold;
+	
+};
