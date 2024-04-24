@@ -1,1 +1,1 @@
-Lösung zur gestelten Web App Aufgabe von Sarah Katharina Klug 
+Lösung zur gestellten Web App Aufgabe von Sarah Katharina Klug 
